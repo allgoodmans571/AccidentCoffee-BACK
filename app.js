@@ -37,33 +37,46 @@ app.post("/mng", (req, res) => {
   console.log("Saved");
 });
 
-app.post("/test", (req, res) => {
-  User.findOne({ email: "maxim@max.com" }, "name email", function (err, user) {
-    if (err) return console.error(err);
-    try {
-      console.log(user.name);
-      res.send(user.name);
-    } catch (err) {
-      console.error(err);
-      res.send(err);
+app.post("/test", jsonParser, (req, res) => {
+  User.findOne(
+    { email: req.body.key },
+    "name position email image telegram",
+    function (err, user) {
+      if (err) return console.error(err);
+      try {
+        console.log(
+          user.name,
+          user.position,
+          user.email,
+          user.image,
+          user.telegram
+        );
+        console.log(user);
+        res.send(user);
+      } catch (err) {
+        console.error(err);
+        res.send(err);
+      }
     }
-  });
+  );
 });
 
 app.post("/registration", jsonParser, (req, res) => {
   body = req.body;
   User.create({
-    position: body.position,
     name: body.name,
+    position: body.position,
     email: body.email,
+    image: body.image,
+    telegram: body.telegram,
   })
     .then(() => {
-      res.status(200);
+      res.sendStatus(200);
       console.log("saved");
     })
     .catch((err) => {
+      res.sendStatus(500);
       console.error(err);
-      res.send({ status: 400 });
     });
 });
 
