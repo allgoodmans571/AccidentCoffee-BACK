@@ -68,6 +68,11 @@ app.post("/registration", jsonParser, (req, res) => {
     email: body.email,
     image: body.image,
     telegram: body.telegram,
+    lifePos: body.lifePos,
+    teamStatus: body.teamStatus,
+    wordPlace: body.wordPlace,
+    projectTime: body.projectTime,
+    tags: body.tags,
   })
     .then(() => {
       res.sendStatus(200);
