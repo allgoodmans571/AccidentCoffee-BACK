@@ -36,7 +36,7 @@ app.post("/mng", (req, res) => {
   console.log("Saved");
 });
 
-app.post("/getAllUsers", jsonParser, (req, res) => {
+app.get("/getAllUsers", jsonParser, (req, res) => {
   User.find({}, "name position email telegram", function (err, user) {
     console.log(
       user.name,
