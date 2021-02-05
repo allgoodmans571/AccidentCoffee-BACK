@@ -46,7 +46,7 @@ app.post("/getAllUsers", jsonParser, (req, res) => {
       user.telegram
     );
     console.log(user);
-    res.send(user);
+    res.send(JSON.stringify(user));
   }).catch((err) => {
     res.status(500);
     res.send(err);
