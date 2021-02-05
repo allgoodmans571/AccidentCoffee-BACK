@@ -36,28 +36,22 @@ app.post("/mng", (req, res) => {
   console.log("Saved");
 });
 
-app.post("/test", jsonParser, (req, res) => {
-  User.findOne(
-    { email: req.body.key },
-    "name position email image telegram",
-    function (err, user) {
-      if (err) return console.error(err);
-      try {
-        console.log(
-          user.name,
-          user.position,
-          user.email,
-          user.image,
-          user.telegram
-        );
-        console.log(user);
-        res.send(user);
-      } catch (err) {
-        console.error(err);
-        res.send(err);
-      }
-    }
-  );
+app.post("/getAllUsers", jsonParser, (req, res) => {
+  User.find({}, "name position email telegram", function (err, user) {
+    console.log(
+      user.name,
+      user.position,
+      user.email,
+      user.image,
+      user.telegram
+    );
+    console.log(user);
+    res.send(user);
+  }).catch((err) => {
+    res.status(500);
+    res.send(err);
+    console.error(err);
+  });
 });
 
 app.post("/registration", jsonParser, (req, res) => {
