@@ -37,17 +37,15 @@ app.post("/mng", (req, res) => {
 });
 
 app.get("/getAllUsers", jsonParser, (req, res) => {
-  User.find({}, "name position email telegram", function (err, user) {
-    console.log(
-      user.name,
-      user.position,
-      user.email,
-      user.image,
-      user.telegram
-    );
-    console.log(user);
-    res.send(JSON.stringify(user));
-  }).catch((err) => {
+  User.find(
+    {},
+    "name position email telegram lifePos teamStatus wordPlace projectTime tags",
+    function (err, user) {
+      console.log(user);
+
+      res.send(JSON.stringify(user));
+    }
+  ).catch((err) => {
     res.status(500);
     res.send(err);
     console.error(err);
