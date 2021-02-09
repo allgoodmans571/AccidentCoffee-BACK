@@ -40,7 +40,7 @@ app.post("/mng", (req, res) => {
 app.post("/getMatch", jsonParser, async (req, res) => {
   let names = [];
   let name = req.body.name;
-  // console.log(name);
+  console.log(name);
 
   let query = await User.findOne({ name }, "tags", (err, query) => {
     return query;
@@ -81,6 +81,7 @@ app.post("/getMatch", jsonParser, async (req, res) => {
     { name: match },
     "name position email telegram lifePos teamStatus wordPlace projectTime tags"
   );
+  console.log("MATCHED");
   res.status(200);
   res.send(JSON.stringify(matchUser));
 });
