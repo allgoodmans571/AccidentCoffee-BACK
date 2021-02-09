@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const User = require("./models/User");
+const { json } = require("body-parser");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -34,6 +35,23 @@ app.post("/mng", (req, res) => {
   });
 
   console.log("Saved");
+});
+
+app.get("/getMatch", jsonParser, (req, res) => {
+  let name = req.body.name;
+  User.findOne(
+    { name },
+    "name position email telegram lifePos teamStatus wordPlace projectTime tags",
+    (err, user) => {
+      console.log(user);
+
+      res.send(JSON.stringify(user));
+    }
+  ).catch((err) => {
+    res.status(500);
+    res.send(err);
+    console.error(err);
+  });
 });
 
 app.get("/getAllUsers", jsonParser, (req, res) => {
