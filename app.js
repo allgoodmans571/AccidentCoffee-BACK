@@ -46,7 +46,7 @@ app.post("/getMatch", jsonParser, async (req, res) => {
     return query;
   });
   let key = query.tags;
-  console.log(key);
+  // console.log(key);
 
   let allData = await User.find(
     {},
@@ -90,7 +90,7 @@ app.get("/getAllUsers", jsonParser, (req, res) => {
     {},
     "name position email telegram lifePos teamStatus wordPlace projectTime tags",
     function (err, user) {
-      console.log(user);
+      // console.log(user);
 
       res.send(JSON.stringify(user));
     }
