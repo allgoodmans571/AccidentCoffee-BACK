@@ -37,7 +37,7 @@ app.post("/mng", (req, res) => {
   console.log("Saved");
 });
 
-app.get("/getMatch", jsonParser, (req, res) => {
+app.post("/getMatch", jsonParser, (req, res) => {
   let name = req.body.name;
   User.findOne(
     { name },
