@@ -37,21 +37,52 @@ app.post("/mng", (req, res) => {
   console.log("Saved");
 });
 
-app.post("/getMatch", jsonParser, (req, res) => {
+app.post("/getMatch", jsonParser, async (req, res) => {
+  let names = [];
   let name = req.body.name;
-  User.findOne(
-    { name },
-    "name position email telegram lifePos teamStatus wordPlace projectTime tags",
-    (err, user) => {
-      console.log(user);
+  // console.log(name);
 
-      res.send(JSON.stringify(user));
-    }
-  ).catch((err) => {
-    res.status(500);
-    res.send(err);
-    console.error(err);
+  let query = await User.findOne({ name }, "tags", (err, query) => {
+    return query;
   });
+  let key = query.tags;
+  console.log(key);
+
+  let allData = await User.find(
+    {},
+    "name position email telegram lifePos teamStatus wordPlace projectTime tags"
+  );
+
+  for (let i = 0; i < allData.length; i++) {
+    findTags(key, allData[i]);
+  }
+
+  function randomInteger(min, max) {
+    // получить случайное число от (min-0.5) до (max+0.5)
+    let rand = min - 0.5 + Math.random() * (max - min + 1);
+    return Math.round(rand);
+  }
+
+  function findTags(array1, array2) {
+    for (let i = 0; i < array1.length; i++) {
+      for (let j = 0; j < array2["tags"].length; j++) {
+        if ((array1[i] = array2["tags"][j])) {
+          if (names.indexOf(array2.name) === -1) {
+            names.push(array2.name);
+          }
+          break;
+        }
+      }
+    }
+  }
+  let match = names[randomInteger(0, names.length - 1)];
+
+  let matchUser = await User.findOne(
+    { name: match },
+    "name position email telegram lifePos teamStatus wordPlace projectTime tags"
+  );
+  res.status(200);
+  res.send(JSON.stringify(matchUser));
 });
 
 app.get("/getAllUsers", jsonParser, (req, res) => {
