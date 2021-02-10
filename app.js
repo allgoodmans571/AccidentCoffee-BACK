@@ -91,7 +91,7 @@ app.post("/getMatch", jsonParser, async (req, res) => {
 app.get("/getAllUsers", jsonParser, (req, res) => {
   User.find(
     {},
-    "name position email telegram lifePos teamStatus wordPlace projectTime tags",
+    "name position email telegram lifePos teamStatus wordPlace projectTime tags image",
     function (err, user) {
       // console.log(user);
 
