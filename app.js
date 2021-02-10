@@ -5,6 +5,8 @@ const bodyParser = require("body-parser");
 const User = require("./models/User");
 const { json } = require("body-parser");
 
+app.use("/static", express.static(__dirname + "/public"));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 const jsonParser = bodyParser.json();
@@ -79,7 +81,7 @@ app.post("/getMatch", jsonParser, async (req, res) => {
 
   let matchUser = await User.findOne(
     { name: match },
-    "name position email telegram lifePos teamStatus wordPlace projectTime tags"
+    "name position email telegram lifePos teamStatus wordPlace projectTime tags image"
   );
   console.log("MATCHED");
   res.status(200);
@@ -102,9 +104,10 @@ app.get("/getAllUsers", jsonParser, (req, res) => {
   });
 });
 
-app.post("/registration", jsonParser, (req, res) => {
+app.post("/registration", jsonParser, async (req, res) => {
   body = req.body;
-  User.create({
+
+  await User.create({
     name: body.name,
     position: body.position,
     email: body.email,
@@ -117,11 +120,11 @@ app.post("/registration", jsonParser, (req, res) => {
     tags: body.tags,
   })
     .then(() => {
-      res.sendStatus(200);
+      res.status(200);
       console.log("saved");
     })
     .catch((err) => {
-      res.sendStatus(500);
+      res.status(500);
       console.error(err);
     });
 });
