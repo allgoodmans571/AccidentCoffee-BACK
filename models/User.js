@@ -4,7 +4,7 @@ const schema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   position: { type: String, required: true },
-  image: { type: Buffer, contentType: String },
+  image: { type: String },
   telegram: { type: String },
   lifePos: { type: String },
   teamStatus: { type: String },
