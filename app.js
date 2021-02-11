@@ -68,7 +68,7 @@ app.post("/getMatch", jsonParser, async (req, res) => {
     return Math.round(rand);
   }
 
-  await function findTags(array1, array2) {
+  function findTags(array1, array2) {
     for (let i = 0; i < array1.length; i++) {
       for (let j = 0; j < array2["tags"].length; j++) {
         if ((array1[i] = array2["tags"][j])) {
@@ -79,7 +79,7 @@ app.post("/getMatch", jsonParser, async (req, res) => {
         }
       }
     }
-  };
+  }
   let match = names[randomInteger(0, names.length - 1)];
 
   let matchUser = await User.findOne(
