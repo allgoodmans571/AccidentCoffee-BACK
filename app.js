@@ -59,7 +59,7 @@ app.post("/getMatch", jsonParser, async (req, res) => {
   );
 
   for (let i = 0; i < allData.length; i++) {
-    findTags(key, allData[i]);
+    findTags(key, allData[i], name);
   }
 
   function randomInteger(min, max) {
@@ -68,11 +68,11 @@ app.post("/getMatch", jsonParser, async (req, res) => {
     return Math.round(rand);
   }
 
-  function findTags(array1, array2) {
+  function findTags(array1, array2, name) {
     for (let i = 0; i < array1.length; i++) {
       for (let j = 0; j < array2["tags"].length; j++) {
         if ((array1[i] = array2["tags"][j])) {
-          if (names.indexOf(array2.name) === -1) {
+          if (names.indexOf(array2.name) === -1 && array2.name !== name) {
             names.push(array2.name);
           }
           break;
@@ -80,12 +80,14 @@ app.post("/getMatch", jsonParser, async (req, res) => {
       }
     }
   }
+
   let match = names[randomInteger(0, names.length - 1)];
 
   let matchUser = await User.findOne(
     { name: match },
     "name position email telegram lifePos teamStatus wordPlace projectTime tags image"
   );
+
   console.log("MATCHED");
   res.status(200);
   await res.send(JSON.stringify(matchUser));
@@ -96,7 +98,7 @@ app.get("/getAllUsers", jsonParser, (req, res) => {
     {},
     "name position email telegram lifePos teamStatus wordPlace projectTime tags image",
     function (err, user) {
-      // console.log(user);
+      console.log(user);
 
       res.send(JSON.stringify(user));
     }
