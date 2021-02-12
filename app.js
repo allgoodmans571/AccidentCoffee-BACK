@@ -90,9 +90,12 @@ app.post("/getMatch", jsonParser, async (req, res) => {
     );
   }
 
-  while ((matchUser = name)) {
-    findTags();
-  }
+  let match = names[randomInteger(0, names.length - 1)];
+
+  let matchUser = await User.findOne(
+    { name: match },
+    "name position email telegram lifePos teamStatus wordPlace projectTime tags image"
+  );
 
   console.log("MATCHED");
   res.status(200);
