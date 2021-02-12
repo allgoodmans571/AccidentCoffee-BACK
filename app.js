@@ -81,14 +81,13 @@ app.post("/getMatch", jsonParser, async (req, res) => {
         }
       }
     }
-    
+
     let match = names[randomInteger(0, names.length - 1)];
-  
-    let matchUser = await User.findOne(
-      { name: match },
-      "name position email telegram lifePos teamStatus wordPlace projectTime tags image"
-    );
   }
+  let matchUser = await User.findOne(
+    { name: match },
+    "name position email telegram lifePos teamStatus wordPlace projectTime tags image"
+  );
 
   let match = names[randomInteger(0, names.length - 1)];
 
