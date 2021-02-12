@@ -43,6 +43,8 @@ app.post("/mng", (req, res) => {
 });
 
 app.post("/getMatch", jsonParser, async (req, res) => {
+  let match;
+  let matchUser;
   let names = [];
   let name = req.body.name;
   console.log(name);
@@ -79,14 +81,18 @@ app.post("/getMatch", jsonParser, async (req, res) => {
         }
       }
     }
+    
+    let match = names[randomInteger(0, names.length - 1)];
+  
+    let matchUser = await User.findOne(
+      { name: match },
+      "name position email telegram lifePos teamStatus wordPlace projectTime tags image"
+    );
   }
 
-  let match = names[randomInteger(0, names.length - 1)];
-
-  let matchUser = await User.findOne(
-    { name: match },
-    "name position email telegram lifePos teamStatus wordPlace projectTime tags image"
-  );
+  while ((matchUser = name)) {
+    findTags();
+  }
 
   console.log("MATCHED");
   res.status(200);
